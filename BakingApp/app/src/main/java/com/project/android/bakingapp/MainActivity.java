@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.project.android.bakingapp.data.RecipeContract;
+import com.project.android.bakingapp.sync.RecipeSyncUtils;
 import com.project.android.bakingapp.utils.NetworkUtils;
 import com.project.android.bakingapp.utils.RecipeJsonUtil;
 
@@ -63,6 +64,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         showLoading();
 
         initLoader();
+
+        RecipeSyncUtils.initialize(this);
+
     }
 
 
@@ -85,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
 
-//          COMPLETED (22) If the loader requested is our forecast loader, return the appropriate CursorLoader
+
             case ID_RECIPE_LOADER:
                 /* URI for all rows of weather data in our weather table */
                 Uri recipeUrl = RecipeContract.RecipeEntry.CONTENT_URI;
