@@ -78,9 +78,9 @@ public class RecipeContentProvider extends ContentProvider {
                 returnCursor = db.query(RecipeContract.RecipeIngredients.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             case INGREDIENTS_WITH_ID:
-                 id = uri.getPathSegments().get(1);
-                 mSelection = "recipeID=?";
-                  mSelectionArgs= new String[]{id};
+                id = uri.getPathSegments().get(1);
+                mSelection = "recipeID=?";
+                mSelectionArgs= new String[]{id};
                 returnCursor = db.query(RecipeContract.RecipeIngredients.TABLE_NAME, projection, mSelection, mSelectionArgs, null, null, sortOrder);
                 break;
             case STEPS:
@@ -90,7 +90,8 @@ public class RecipeContentProvider extends ContentProvider {
                 id = uri.getPathSegments().get(1);
                 mSelection = "recipeID=?";
                 mSelectionArgs= new String[]{id};
-                returnCursor = db.query(RecipeContract.RecipeSteps.TABLE_NAME, projection, mSelection, mSelectionArgs, null, null, sortOrder);
+              //  returnCursor = db.query(RecipeContract.RecipeSteps.TABLE_NAME, projection, mSelection, mSelectionArgs, null, null, sortOrder);
+                returnCursor = db.query(RecipeContract.RecipeSteps.TABLE_NAME, null, mSelection, mSelectionArgs, null, null, sortOrder);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown Uri"+ uri);

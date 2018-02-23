@@ -7,6 +7,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -39,30 +40,9 @@ public class RecipeSyncTask  {
 
             String  SearchResults = NetworkUtils.getResponseFromHttpUrl(getRecipes);
 
-            ContentValues [] recipeValues = RecipeJsonUtil
+            RecipeJsonUtil
                     .getRecipesContentValuesFromJson(context, SearchResults);
 
-            ContentValues  ingredientsValues = RecipeJsonUtil.getIngredientsContentValue();
-            ContentValues  stepsValues = RecipeJsonUtil.getStepsContentValue();
-
-            if (recipeValues != null && recipeValues.length != 0 && ingredientsValues != null  && stepsValues != null ) {
-                ContentResolver recContentResolver = context.getContentResolver();
-
-                //recContentResolver.delete(RecipeContract.RecipeEntry.CONTENT_URI,null,null);
-
-                recContentResolver.bulkInsert(RecipeContract.RecipeEntry.CONTENT_URI, recipeValues);
-
-
-                //   recContentResolver.delete(RecipeContract.RecipeIngredients.CONTENT_URI,null,null);
-
-                recContentResolver.insert(RecipeContract.RecipeIngredients.CONTENT_URI, ingredientsValues);
-
-
-                //   recContentResolver.delete(RecipeContract.RecipeSteps.CONTENT_URI,null,null);
-
-                recContentResolver.insert(RecipeContract.RecipeSteps.CONTENT_URI, stepsValues);
-
-            }
 
             String notificationTitle = context.getString(R.string.app_name);
             String notificationText = " you have new recipes";
@@ -94,7 +74,7 @@ public class RecipeSyncTask  {
             Log.e("MainActivity", e.getMessage());
 
         }
-    }
+   }
 
 
 }

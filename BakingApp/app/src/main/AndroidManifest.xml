@@ -15,16 +15,18 @@
             android:name=".data.RecipeContentProvider"
             android:authorities="com.project.android.bakingapp"
             android:exported="false" />
+
         <service
             android:name=".sync.RecipeFirebaseJobService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
             </intent-filter>
-        </service >
+        </service>
         <service
             android:name=".sync.RecipeSyncIntentService"
             android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
@@ -34,6 +36,24 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".StepListActivity"
+            android:label="@string/title_step_list"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project.android.bakingapp.MainActivity" />
+        </activity>
+        <activity
+            android:name=".StepDetailActivity"
+            android:label="@string/title_step_detail"
+            android:parentActivityName=".StepListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project.android.bakingapp.StepListActivity" />
         </activity>
     </application>
 

@@ -3,6 +3,7 @@ package com.project.android.bakingapp;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,23 +15,25 @@ import com.project.android.bakingapp.data.RecipeContract;
  * Created by fg7cpt on 2/14/2018.
  */
 
-public class RecipeAdapter  extends RecyclerView.Adapter<RecipeAdapter.RecipeAdapterViewHolder>{
+public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeAdapterViewHolder>{
 
+    private static final String TAG = RecipesAdapter.class.getName();
     private final Context mContext;
     final private RecipeAdapterOnClickHandler mClickHandler;
     private Cursor mCursor;
 
-    public RecipeAdapter(Context mContext, RecipeAdapterOnClickHandler clickHandler) {
+    public RecipesAdapter(Context mContext, RecipeAdapterOnClickHandler clickHandler) {
         this.mContext = mContext;
         mClickHandler = clickHandler;
     }
 
 
     public interface RecipeAdapterOnClickHandler {
-        void onClick(String Recipe);
+        void onClick(int recipeID, String recipeName);
     }
+
     @Override
-    public RecipeAdapter.RecipeAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecipesAdapter.RecipeAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater
                 .from(mContext)
                 .inflate(R.layout.recipe_card, parent, false);
@@ -41,7 +44,7 @@ public class RecipeAdapter  extends RecyclerView.Adapter<RecipeAdapter.RecipeAda
     }
 
     @Override
-    public void onBindViewHolder(RecipeAdapter.RecipeAdapterViewHolder holder, int position) {
+    public void onBindViewHolder(RecipesAdapter.RecipeAdapterViewHolder holder, int position) {
         mCursor.moveToPosition(position);
 
 
@@ -83,7 +86,7 @@ public class RecipeAdapter  extends RecyclerView.Adapter<RecipeAdapter.RecipeAda
         RecipeAdapterViewHolder(View view) {
             super(view);
 
-            recipeNameTxtV = (TextView) view.findViewById(R.id.recipeNameTxV);
+            recipeNameTxtV = (TextView) view.findViewById(R.id.recipeName);
             recipeServingTxtV = (TextView) view.findViewById(R.id.servingsTxtV);
 
             view.setOnClickListener(this);
@@ -92,7 +95,17 @@ public class RecipeAdapter  extends RecyclerView.Adapter<RecipeAdapter.RecipeAda
 
         @Override
         public void onClick(View v) {
+            int adapterPosition = getAdapterPosition();
+            mCursor.moveToPosition(adapterPosition);
 
+            int recipeNameID = mCursor.getColumnIndex(RecipeContract.RecipeEntry.COLUMN_RECIPE_ID);
+            int recipeId = mCursor.getInt(recipeNameID);
+
+            int recipeName = mCursor.getColumnIndex(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME);
+            String name = mCursor.getString(recipeName);
+
+            mClickHandler.onClick(recipeId, name);
+            Log.i(TAG, ""+recipeId);
         }
     }
 }
