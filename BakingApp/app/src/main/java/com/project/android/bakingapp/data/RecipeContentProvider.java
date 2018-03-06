@@ -28,6 +28,7 @@ public class RecipeContentProvider extends ContentProvider {
 
     public static final int STEPS = 300;
     public static final int STEPS_WITH_ID=301;
+    public static final int STEP=302;
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
@@ -42,6 +43,9 @@ public class RecipeContentProvider extends ContentProvider {
 
         uriMatcher.addURI(RecipeContract.AUTHORITY, RecipeContract.PATH_STEPS, STEPS);
         uriMatcher.addURI(RecipeContract.AUTHORITY, RecipeContract.PATH_STEPS+"/#", STEPS_WITH_ID);
+
+        uriMatcher.addURI(RecipeContract.AUTHORITY, RecipeContract.PATH_STEPS, STEPS);
+        uriMatcher.addURI(RecipeContract.AUTHORITY, RecipeContract.PATH_STEPS+"/#"+"/#", STEP);
 
         return uriMatcher;
 
@@ -90,7 +94,13 @@ public class RecipeContentProvider extends ContentProvider {
                 id = uri.getPathSegments().get(1);
                 mSelection = "recipeID=?";
                 mSelectionArgs= new String[]{id};
-              //  returnCursor = db.query(RecipeContract.RecipeSteps.TABLE_NAME, projection, mSelection, mSelectionArgs, null, null, sortOrder);
+                returnCursor = db.query(RecipeContract.RecipeSteps.TABLE_NAME, null, mSelection, mSelectionArgs, null, null, sortOrder);
+                break;
+            case STEP:
+                String recipeID = uri.getPathSegments().get(1);
+                String stepID = uri.getPathSegments().get(2);
+                mSelection = "recipeID=? AND stepID=?";
+                mSelectionArgs= new String[]{recipeID, stepID};
                 returnCursor = db.query(RecipeContract.RecipeSteps.TABLE_NAME, null, mSelection, mSelectionArgs, null, null, sortOrder);
                 break;
             default:

@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         mRecyclerView.setHasFixedSize(false);
 
-        mRecipesAdapter = new RecipesAdapter(this, this);
+        mRecipesAdapter = new RecipesAdapter(this, this, R.layout.recipe_card);
 
         mRecyclerView.setAdapter(mRecipesAdapter);
 
@@ -82,11 +82,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onClick(int recipeID, String recipeName) {
         Intent recipeDetailIntent = new Intent(MainActivity.this, StepListActivity.class);
-        Uri uriForRecipe = RecipeContract.RecipeSteps.CONTENT_URI.buildUpon().appendPath(Integer.toString(recipeID)).build();
-        recipeDetailIntent.setData(uriForRecipe);
+
         recipeDetailIntent.putExtra(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME,recipeName);
+        recipeDetailIntent.putExtra(RecipeContract.RecipeEntry.COLUMN_RECIPE_ID,Integer.toString(recipeID));
+
         startActivity(recipeDetailIntent);
     }
+
+    @Override
+    public void onClick(int stepID, int recipeID) {
+
+    }
+
 
     private void showLoading() {
 

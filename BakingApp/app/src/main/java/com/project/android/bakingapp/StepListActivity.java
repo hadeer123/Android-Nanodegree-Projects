@@ -1,5 +1,6 @@
 package com.project.android.bakingapp;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,29 +12,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
 import com.project.android.bakingapp.data.RecipeContract;
 
+import static android.support.v4.app.NavUtils.navigateUpFromSameTask;
+
 /**
- * An activity representing a list of Steps. This activity
+ * An activity representing a list of steps. This activity
  * has different presentations for handset and tablet-size devices. On
  * handsets, the activity presents a list of items, which when touched,
  * lead to a {@link StepDetailActivity} representing
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class StepListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class StepListActivity extends AppCompatActivity implements  RecipesAdapter.RecipeAdapterOnClickHandler , LoaderManager.LoaderCallbacks<Cursor> {
 
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
+
     private boolean mTwoPane;
+    private static final String TAG=StepListActivity.class.getName();
     private Uri recipeIDUri;
-    private RecipeListAdaptor mRecipeListAdapter;
+    private RecipesAdapter mRecipeListAdapter;
     private RecyclerView mRecyclerView;
     private int mPosition = RecyclerView.NO_POSITION;
 
@@ -48,10 +50,12 @@ public class StepListActivity extends AppCompatActivity implements LoaderManager
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        recipeIDUri = getIntent().getData();
+        String recipeID = getIntent().getStringExtra(RecipeContract.RecipeEntry.COLUMN_RECIPE_ID);
+        recipeIDUri = RecipeContract.RecipeSteps.CONTENT_URI.buildUpon().appendPath(recipeID).build();
+
+
         setTitle(getIntent().getStringExtra(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME));
 
-        // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -67,6 +71,7 @@ public class StepListActivity extends AppCompatActivity implements LoaderManager
         mRecyclerView.setHasFixedSize(true);
         setupRecyclerView( mRecyclerView);
 
+
         if (findViewById(R.id.step_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-w900dp).
@@ -74,6 +79,7 @@ public class StepListActivity extends AppCompatActivity implements LoaderManager
             // activity should be in two-pane mode.
             mTwoPane = true;
         }
+
         initLoader();
     }
 
@@ -93,18 +99,34 @@ public class StepListActivity extends AppCompatActivity implements LoaderManager
             //
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
-//            navigateUpFromSameTask(this);
-//            return true;
+            navigateUpFromSameTask(this);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        mRecipeListAdapter = new RecipeListAdaptor(this);
+        mRecipeListAdapter = new RecipesAdapter(this, this, R.layout.step_list_content);
         recyclerView.setAdapter(mRecipeListAdapter);
+
+    }
+
+
+    @Override
+    public void onClick(int recipeID, String recipeName) {
+
     }
 
     @Override
+    public void onClick(int stepID, int recipeID) {
+        Intent stepDetailIntent = new Intent(StepListActivity.this, StepDetailActivity.class);
+        stepDetailIntent.putExtra(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME,getIntent().getStringExtra(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME));
+        stepDetailIntent.putExtra(stepDetailFragment.ARG_ITEM_ID,String.valueOf(stepID));
+        stepDetailIntent.putExtra( stepDetailFragment.STEP_DETAIL_PROJECTION[stepDetailFragment.INDEX_RECIPE_ID],String.valueOf(recipeID));
+        startActivity(stepDetailIntent);
+    }
+
+
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
             case ID_STEPS_LAODER:
@@ -119,6 +141,7 @@ public class StepListActivity extends AppCompatActivity implements LoaderManager
                 throw new RuntimeException("Loader Not Implemented: " + id);
         }
     }
+
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -139,6 +162,5 @@ public class StepListActivity extends AppCompatActivity implements LoaderManager
     }
 
 
+
 }
-
-
