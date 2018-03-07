@@ -3,4 +3,12 @@
     <string name="title_activity_main">Baking Time</string>
     <string name="title_step_list">Steps</string>
     <string name="title_step_detail">Step Detail</string>
+    <string name="step_thumbnail_desc">step thumbnail</string>
+    <string name="previous_step_img_desc">Previous Step</string>
+    <string name="next_step_img_desc">Next Step</string>
+    <string name="pause">pause</string>
+    <string name="play">play</string>
+    <string name="restart">restart</string>
+    <string name="recipe_step_description_fill_txt">Recipe Step Description</string>
+    <string name="of">of</string>
 </resources>

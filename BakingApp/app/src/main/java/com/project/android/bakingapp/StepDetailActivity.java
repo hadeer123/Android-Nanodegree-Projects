@@ -1,32 +1,41 @@
 package com.project.android.bakingapp;
 
 
-import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-
-import android.support.v7.widget.Toolbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.project.android.bakingapp.data.RecipeContract;
 
 
-public class StepDetailActivity extends AppCompatActivity  {
+public class StepDetailActivity extends AppCompatActivity {
+    public static final String TOTAL_STEPS_FOR_RECIPE = "total_steps";
+    private static int totalSteps;
+    private static int stepID;
+    private static String recipeID;
+    private ImageView previousStepImg, nextStepImg;
+    private TextView stepCountTxtView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_detail);
 
+
+        previousStepImg = (ImageView) findViewById(R.id.prev_step_img);
+        nextStepImg = (ImageView) findViewById(R.id.next_step_img);
+        stepCountTxtView = (TextView) findViewById(R.id.stepsCountTxtView);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
 
         setTitle(getIntent().getStringExtra(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME));
-
 
 
         // Show the Up button in the action bar.
@@ -39,23 +48,61 @@ public class StepDetailActivity extends AppCompatActivity  {
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
-            Bundle arguments = new Bundle();
 
-            arguments.putString(stepDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(stepDetailFragment.ARG_ITEM_ID));
+            stepID = Integer.parseInt(getIntent().getStringExtra(StepDetailFragment.ARG_ITEM_ID));
+            totalSteps = getIntent().getIntExtra(TOTAL_STEPS_FOR_RECIPE, -1);
+            recipeID = StepDetailFragment.STEP_DETAIL_PROJECTION[StepDetailFragment.INDEX_RECIPE_ID];
 
-            String key = stepDetailFragment.STEP_DETAIL_PROJECTION[stepDetailFragment.INDEX_RECIPE_ID];
-            arguments.putString(key, getIntent().getStringExtra(key));
+            if (stepID == 0) {
+                previousStepImg.setVisibility(View.INVISIBLE);
+                stepCountTxtView.setVisibility(View.INVISIBLE);
+            }
 
-            stepDetailFragment fragment = new stepDetailFragment();
-            fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.step_detail_container, fragment)
-                    .commit();
+
+
+            createFragment(stepID);
+
         }
+
+        previousStepImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (stepID != 0)
+                    createFragment(--stepID);
+            }
+        });
+
+        nextStepImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (stepID != totalSteps)
+                    createFragment(++stepID);
+            }
+        });
 
 
     }
+
+
+    private void createFragment(int stepID) {
+
+        stepCountTxtView.setText(String.valueOf(stepID) + getString(R.string.of) + totalSteps);
+        nextStepImg.setVisibility((stepID == totalSteps) ? View.INVISIBLE : View.VISIBLE);
+        previousStepImg.setVisibility((stepID == 0) ? View.INVISIBLE : View.VISIBLE);
+        stepCountTxtView.setVisibility((stepID == 0) ? View.INVISIBLE : View.VISIBLE);
+
+        Bundle arguments = new Bundle();
+        arguments.putString(StepDetailFragment.ARG_ITEM_ID, String.valueOf(stepID));
+        arguments.putString(recipeID, getIntent().getStringExtra(recipeID));
+
+        StepDetailFragment fragment = new StepDetailFragment();
+        fragment.setArguments(arguments);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.step_detail_container, fragment)
+                .commit();
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

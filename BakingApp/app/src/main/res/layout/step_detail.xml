@@ -17,10 +17,18 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/thumbnailImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/step_thumbnail_desc"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_not_found" />
+
         <com.google.android.exoplayer2.ui.SimpleExoPlayerView
             android:id="@+id/videoView"
-            android:layout_width="185dp"
-            android:layout_height="196dp" />
+             android:layout_width="350dp"
+             android:layout_height="300dp" />
 
 
     </android.support.v7.widget.CardView>
@@ -49,34 +57,4 @@
             android:textSize="24sp" />
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/stepNavigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        app:cardElevation="3dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stepInstruction">
-
-        <ImageView
-            android:id="@+id/prev_stepimg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:foregroundGravity="left"
-            app:srcCompat="@mipmap/ic_previous" />
-
-        <ImageView
-            android:id="@+id/next_stepimg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:foregroundGravity="right"
-            app:srcCompat="@mipmap/ic_next" />
-    </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

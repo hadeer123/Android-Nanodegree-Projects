@@ -33,7 +33,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:fontFamily="cursive"
-                android:text="Recipe Step Description"
+                android:text="@string/recipe_step_description_fill_txt"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textSize="18sp"

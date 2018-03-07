@@ -12,10 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.project.android.bakingapp.data.RecipeContract;
 
@@ -118,11 +118,12 @@ public class StepListActivity extends AppCompatActivity implements  RecipesAdapt
     }
 
     @Override
-    public void onClick(int stepID, int recipeID) {
+    public void onClick(int stepID, int recipeID, int totalSteps) {
         Intent stepDetailIntent = new Intent(StepListActivity.this, StepDetailActivity.class);
         stepDetailIntent.putExtra(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME,getIntent().getStringExtra(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME));
-        stepDetailIntent.putExtra(stepDetailFragment.ARG_ITEM_ID,String.valueOf(stepID));
-        stepDetailIntent.putExtra( stepDetailFragment.STEP_DETAIL_PROJECTION[stepDetailFragment.INDEX_RECIPE_ID],String.valueOf(recipeID));
+        stepDetailIntent.putExtra(StepDetailFragment.ARG_ITEM_ID,String.valueOf(stepID));
+        stepDetailIntent.putExtra( StepDetailFragment.STEP_DETAIL_PROJECTION[StepDetailFragment.INDEX_RECIPE_ID],String.valueOf(recipeID));
+        stepDetailIntent.putExtra( StepDetailActivity.TOTAL_STEPS_FOR_RECIPE ,totalSteps);
         startActivity(stepDetailIntent);
     }
 

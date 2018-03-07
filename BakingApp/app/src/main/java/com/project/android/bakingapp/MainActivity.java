@@ -90,9 +90,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public void onClick(int stepID, int recipeID) {
+    public void onClick(int stepID, int recipeID, int totalSteps) {
 
     }
+
 
 
     private void showLoading() {

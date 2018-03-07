@@ -89,7 +89,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeAd
 
     public interface RecipeAdapterOnClickHandler {
         void onClick(int recipeID, String recipeName);
-        void onClick (int stepID, int recipeID);
+        void onClick (int stepID, int recipeID, int totalSteps);
     }
 
     class RecipeAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -137,7 +137,9 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeAd
 
                     int stepID = mCursor.getColumnIndex(RecipeContract.RecipeSteps.COLUMN_STEP_ID);
                     final int step = mCursor.getInt(stepID);
-                    mClickHandler.onClick(step, reID);
+
+                    int stepCount = mCursor.getCount();
+                    mClickHandler.onClick(step, reID,stepCount );
                     break;
 
             }
