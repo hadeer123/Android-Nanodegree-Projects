@@ -11,4 +11,9 @@
     <string name="restart">restart</string>
     <string name="recipe_step_description_fill_txt">Recipe Step Description</string>
     <string name="of">of</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="recipeIngTxt_text">RecipeIng</string>
+    <string name="title_activity_recipe_widget">RecipeWidgetActivity</string>
 </resources>

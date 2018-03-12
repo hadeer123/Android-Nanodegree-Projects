@@ -239,15 +239,15 @@ public class StepDetailFragment extends Fragment implements SimpleExoPlayer.Even
     }
 
     private void handleStepMedia (){
-        if(!stepVideoUrl.isEmpty()) {
+
+        thumbNail.setVisibility((!stepImageUrl.isEmpty() && stepVideoUrl.isEmpty())?View.VISIBLE:View.GONE);
+        mExoPlayerView.setVisibility((!stepVideoUrl.isEmpty() && stepImageUrl.isEmpty())?View.VISIBLE:View.GONE);
+
+       if(!stepVideoUrl.isEmpty()) {
             initializeMediaSession();
             initializePlayer(Uri.parse(stepVideoUrl));
-            thumbNail.setVisibility(View.GONE);
-        } else if(!stepImageUrl.isEmpty()) {
+        } else if(!stepImageUrl.isEmpty())
             Picasso.with(getContext()).load(stepImageUrl).into(thumbNail);
-            mExoPlayerView.setVisibility(View.GONE);
-        }
-
 
     }
     @Override

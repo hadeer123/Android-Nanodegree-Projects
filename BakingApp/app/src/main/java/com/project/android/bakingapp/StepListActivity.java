@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -14,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -35,11 +37,18 @@ public class StepListActivity extends AppCompatActivity implements  RecipesAdapt
     private boolean mTwoPane;
     private static final String TAG=StepListActivity.class.getName();
     private Uri recipeIDUri;
+
     private RecipesAdapter mRecipeListAdapter;
     private RecyclerView mRecyclerView;
     private int mPosition = RecyclerView.NO_POSITION;
+    private String recipeID;
+
+    private  final String RECIPE_ID = RecipeContract.RecipeEntry.COLUMN_RECIPE_ID;
+    private final String RECIPE_NAME = RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME;
 
     private static final int ID_STEPS_LAODER = 55;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,19 +58,24 @@ public class StepListActivity extends AppCompatActivity implements  RecipesAdapt
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
-
-        String recipeID = getIntent().getStringExtra(RecipeContract.RecipeEntry.COLUMN_RECIPE_ID);
-        recipeIDUri = RecipeContract.RecipeSteps.CONTENT_URI.buildUpon().appendPath(recipeID).build();
-
-
-        setTitle(getIntent().getStringExtra(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME));
-
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+
+
+        recipeID = getIntent().getStringExtra(RECIPE_ID);
+        recipeIDUri = RecipeContract.RecipeSteps.CONTENT_URI.buildUpon().appendPath(recipeID).build();
+
+
+        setTitle(getIntent().getStringExtra(RECIPE_NAME));
+        createIngredientFragment(recipeID);
+
+
         mRecyclerView =  (RecyclerView) findViewById(R.id.step_list);
+
+
         assert mRecyclerView != null;
 
         LinearLayoutManager layoutManager =
@@ -82,6 +96,12 @@ public class StepListActivity extends AppCompatActivity implements  RecipesAdapt
 
         initLoader();
     }
+
+    private void createIngredientFragment(String recipeID) {
+       if (findViewById(R.id.recipe_ingredients_frame)  !=null)
+            getSupportFragmentManager().beginTransaction().add(R.id.recipe_ingredients_frame, RecipeIngredientFragment.newInstance(recipeID)).commit();
+    }
+
 
     public void initLoader() {
         getSupportLoaderManager().initLoader(ID_STEPS_LAODER, null, this);
@@ -120,10 +140,12 @@ public class StepListActivity extends AppCompatActivity implements  RecipesAdapt
     @Override
     public void onClick(int stepID, int recipeID, int totalSteps) {
         Intent stepDetailIntent = new Intent(StepListActivity.this, StepDetailActivity.class);
+
         stepDetailIntent.putExtra(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME,getIntent().getStringExtra(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME));
         stepDetailIntent.putExtra(StepDetailFragment.ARG_ITEM_ID,String.valueOf(stepID));
-        stepDetailIntent.putExtra( StepDetailFragment.STEP_DETAIL_PROJECTION[StepDetailFragment.INDEX_RECIPE_ID],String.valueOf(recipeID));
-        stepDetailIntent.putExtra( StepDetailActivity.TOTAL_STEPS_FOR_RECIPE ,totalSteps);
+        stepDetailIntent.putExtra(StepDetailFragment.STEP_DETAIL_PROJECTION[StepDetailFragment.INDEX_RECIPE_ID],String.valueOf(recipeID));
+        stepDetailIntent.putExtra(StepDetailActivity.TOTAL_STEPS_FOR_RECIPE ,totalSteps);
+
         startActivity(stepDetailIntent);
     }
 

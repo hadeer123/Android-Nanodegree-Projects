@@ -76,7 +76,7 @@ public class StepDetailActivity extends AppCompatActivity {
         nextStepImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (stepID != totalSteps)
+                if (stepID < totalSteps)
                     createFragment(++stepID);
             }
         });
@@ -87,7 +87,7 @@ public class StepDetailActivity extends AppCompatActivity {
 
     private void createFragment(int stepID) {
 
-        stepCountTxtView.setText(String.valueOf(stepID) + getString(R.string.of) + totalSteps);
+        stepCountTxtView.setText(String.valueOf(stepID) + getString(R.string.of) + String.valueOf(totalSteps-1));
         nextStepImg.setVisibility((stepID == totalSteps) ? View.INVISIBLE : View.VISIBLE);
         previousStepImg.setVisibility((stepID == 0) ? View.INVISIBLE : View.VISIBLE);
         stepCountTxtView.setVisibility((stepID == 0) ? View.INVISIBLE : View.VISIBLE);
