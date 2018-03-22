@@ -5,19 +5,15 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-
-import android.support.v7.app.ActionBar;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.project.android.bakingapp.data.RecipeContract;
 
@@ -31,38 +27,32 @@ import static android.support.v4.app.NavUtils.navigateUpFromSameTask;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class StepListActivity extends AppCompatActivity implements  RecipesAdapter.RecipeAdapterOnClickHandler , LoaderManager.LoaderCallbacks<Cursor> {
+public class StepListActivity extends AppCompatActivity implements RecipesAdapter.RecipeAdapterOnClickHandler, LoaderManager.LoaderCallbacks<Cursor> {
 
 
+    private static final String TAG = StepListActivity.class.getName();
+    private static final int ID_STEPS_LAODER = 55;
+    private final String RECIPE_ID = RecipeContract.RecipeEntry.COLUMN_RECIPE_ID;
+    private final String RECIPE_NAME = RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME;
     private boolean mTwoPane;
-    private static final String TAG=StepListActivity.class.getName();
     private Uri recipeIDUri;
-
     private RecipesAdapter mRecipeListAdapter;
     private RecyclerView mRecyclerView;
     private int mPosition = RecyclerView.NO_POSITION;
     private String recipeID;
-
-    private  final String RECIPE_ID = RecipeContract.RecipeEntry.COLUMN_RECIPE_ID;
-    private final String RECIPE_NAME = RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME;
-
-    private static final int ID_STEPS_LAODER = 55;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
 
 
         recipeID = getIntent().getStringExtra(RECIPE_ID);
@@ -73,7 +63,7 @@ public class StepListActivity extends AppCompatActivity implements  RecipesAdapt
         createIngredientFragment(recipeID);
 
 
-        mRecyclerView =  (RecyclerView) findViewById(R.id.step_list);
+        mRecyclerView = findViewById(R.id.step_list);
 
 
         assert mRecyclerView != null;
@@ -82,8 +72,7 @@ public class StepListActivity extends AppCompatActivity implements  RecipesAdapt
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
         mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setHasFixedSize(true);
-        setupRecyclerView( mRecyclerView);
+        setupRecyclerView(mRecyclerView);
 
 
         if (findViewById(R.id.step_detail_container) != null) {
@@ -98,7 +87,7 @@ public class StepListActivity extends AppCompatActivity implements  RecipesAdapt
     }
 
     private void createIngredientFragment(String recipeID) {
-       if (findViewById(R.id.recipe_ingredients_frame)  !=null)
+        if (findViewById(R.id.recipe_ingredients_frame) != null)
             getSupportFragmentManager().beginTransaction().add(R.id.recipe_ingredients_frame, RecipeIngredientFragment.newInstance(recipeID)).commit();
     }
 
@@ -141,10 +130,10 @@ public class StepListActivity extends AppCompatActivity implements  RecipesAdapt
     public void onClick(int stepID, int recipeID, int totalSteps) {
         Intent stepDetailIntent = new Intent(StepListActivity.this, StepDetailActivity.class);
 
-        stepDetailIntent.putExtra(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME,getIntent().getStringExtra(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME));
-        stepDetailIntent.putExtra(StepDetailFragment.ARG_ITEM_ID,String.valueOf(stepID));
-        stepDetailIntent.putExtra(StepDetailFragment.STEP_DETAIL_PROJECTION[StepDetailFragment.INDEX_RECIPE_ID],String.valueOf(recipeID));
-        stepDetailIntent.putExtra(StepDetailActivity.TOTAL_STEPS_FOR_RECIPE ,totalSteps);
+        stepDetailIntent.putExtra(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME, getIntent().getStringExtra(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME));
+        stepDetailIntent.putExtra(StepDetailFragment.ARG_ITEM_ID, String.valueOf(stepID));
+        stepDetailIntent.putExtra(StepDetailFragment.STEP_DETAIL_PROJECTION[StepDetailFragment.INDEX_RECIPE_ID], String.valueOf(recipeID));
+        stepDetailIntent.putExtra(StepDetailActivity.TOTAL_STEPS_FOR_RECIPE, totalSteps);
 
         startActivity(stepDetailIntent);
     }
@@ -168,7 +157,7 @@ public class StepListActivity extends AppCompatActivity implements  RecipesAdapt
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if(data != null) {
+        if (data != null) {
             mRecipeListAdapter.swapCursor(data);
         }
         if (mPosition == RecyclerView.NO_POSITION) mPosition = 0;
@@ -183,7 +172,6 @@ public class StepListActivity extends AppCompatActivity implements  RecipesAdapt
         mRecipeListAdapter.swapCursor(null);
 
     }
-
 
 
 }

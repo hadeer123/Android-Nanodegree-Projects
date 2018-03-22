@@ -9,7 +9,8 @@ import org.junit.Test;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -46,7 +47,7 @@ public class ContractClassUnitTest {
     }
 
     @Test
-    public void inner_class_members_correct () throws  Exception {
+    public void inner_class_members_correct() throws Exception {
         Field[] allFields;
         Class[] innerClasses = RecipeContract.class.getDeclaredClasses();
         assertEquals("Cannot find inner class to complete unit test", 3, innerClasses.length);
@@ -54,7 +55,7 @@ public class ContractClassUnitTest {
         allFields = entryClass.getDeclaredFields();
         assertEquals("There should be exactly 6 String members in the inner class", 6, allFields.length);
         for (Field field : allFields) {
-            assertTrue("All members in the contract class should be Strings", field.getType()==String.class);
+            assertTrue("All members in the contract class should be Strings", field.getType() == String.class);
             assertTrue("All members in the contract class should be final", Modifier.isFinal(field.getModifiers()));
             assertTrue("All members in the contract class should be static", Modifier.isStatic(field.getModifiers()));
         }
@@ -63,7 +64,7 @@ public class ContractClassUnitTest {
         allFields = ingredientsClass.getDeclaredFields();
         assertEquals("There should be exactly 4 String members in the inner class", 4, allFields.length);
         for (Field field : allFields) {
-            assertTrue("All members in the contract class should be Strings", field.getType()==String.class);
+            assertTrue("All members in the contract class should be Strings", field.getType() == String.class);
             assertTrue("All members in the contract class should be final", Modifier.isFinal(field.getModifiers()));
             assertTrue("All members in the contract class should be static", Modifier.isStatic(field.getModifiers()));
         }
@@ -72,7 +73,7 @@ public class ContractClassUnitTest {
         allFields = stepsClass.getDeclaredFields();
         assertEquals("There should be exactly 6 String members in the inner class", 6, allFields.length);
         for (Field field : allFields) {
-            assertTrue("All members in the contract class should be Strings", field.getType()==String.class);
+            assertTrue("All members in the contract class should be Strings", field.getType() == String.class);
             assertTrue("All members in the contract class should be final", Modifier.isFinal(field.getModifiers()));
             assertTrue("All members in the contract class should be static", Modifier.isStatic(field.getModifiers()));
         }

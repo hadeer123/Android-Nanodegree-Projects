@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,9 +20,9 @@ import java.util.Scanner;
 public class NetworkUtils {
 
 
-    private static final String format="json";
+    private static final String format = "json";
 
-    public static URL buildURL(String query){
+    public static URL buildURL(String query) {
         Uri builtUri = Uri.parse(query).buildUpon()
                 .build();
 
@@ -34,14 +35,21 @@ public class NetworkUtils {
 
         return url;
     }
+
     public static boolean isNetworkAvailable(final Context context) {
         ConnectivityManager cm =
-                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
-
+        if (isConnected) {
+            try {
+                Toast.makeText(context, "Connected to Network", Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return isConnected;
     }
 

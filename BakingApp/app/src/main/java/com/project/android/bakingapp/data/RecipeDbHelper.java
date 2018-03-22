@@ -35,7 +35,7 @@ public class RecipeDbHelper extends SQLiteOpenHelper {
                 RecipeContract.RecipeIngredients.TABLE_NAME + " (" +
                 RecipeContract.RecipeIngredients._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 RecipeContract.RecipeIngredients.COLUMN_RECIPE_ID + " INTEGER NOT NULL, " +
-                RecipeContract.RecipeIngredients.COLUMN_QUANTITY +  " DOUBLE NOT NULL, " +
+                RecipeContract.RecipeIngredients.COLUMN_QUANTITY + " DOUBLE NOT NULL, " +
                 RecipeContract.RecipeIngredients.COLUMN_MEASURE + " TEXT NOT NULL, " +
                 RecipeContract.RecipeIngredients.COLUMN_INGREDIENT + " TEXT NOT NULL " + ");";
 
@@ -45,8 +45,8 @@ public class RecipeDbHelper extends SQLiteOpenHelper {
                 RecipeContract.RecipeSteps.COLUMN_RECIPE_ID + " INTEGER NOT NULL, " +
                 RecipeContract.RecipeSteps.COLUMN_STEP_ID + " INTEGER NOT NULL, " +
                 RecipeContract.RecipeSteps.COLUMN_SHORT_DESC + " TEXT NOT NULL, " +
-                RecipeContract.RecipeSteps.COLUMN_DESC + " TEXT NOT NULL, "+
-                RecipeContract.RecipeSteps.COLUMN_VIDEO_URL + " TEXT NOT NULL, "+
+                RecipeContract.RecipeSteps.COLUMN_DESC + " TEXT NOT NULL, " +
+                RecipeContract.RecipeSteps.COLUMN_VIDEO_URL + " TEXT NOT NULL, " +
                 RecipeContract.RecipeSteps.COLUMN_THUMBNAIL_URL + " TEXT NOT NULL "
                 + ");";
         sqLiteDatabase.execSQL(SQL_CREATE_RECIPE_TABLE);

@@ -1,9 +1,11 @@
-package com.project.android.bakingapp;
+package com.project.android.bakingapp.Widget;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.widget.RemoteViews;
+
+import com.project.android.bakingapp.R;
 
 
 public class RecipeIngredientsWidget extends AppWidgetProvider {

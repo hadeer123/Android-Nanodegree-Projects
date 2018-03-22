@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lost_network_msg">Lost Network Connection</string>
+    <string name="intro_txt">Introduction</string>
+</resources>

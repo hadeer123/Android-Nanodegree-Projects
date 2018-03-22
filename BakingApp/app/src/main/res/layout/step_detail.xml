@@ -1,60 +1,59 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:layout_editor_absoluteY="81dp">
 
 
-    <android.support.v7.widget.CardView
+    <RelativeLayout
         android:id="@+id/mediaPlayer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:cardElevation="3dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:gravity="center_vertical">
 
         <ImageView
             android:id="@+id/thumbnailImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="8dp"
             android:contentDescription="@string/step_thumbnail_desc"
-            android:visibility="gone"
+            android:foregroundGravity="center"
+            android:visibility="invisible"
             app:srcCompat="@drawable/ic_not_found" />
 
         <com.google.android.exoplayer2.ui.SimpleExoPlayerView
             android:id="@+id/videoView"
-             android:layout_width="350dp"
-             android:layout_height="300dp" />
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_alignTop="@+id/thumbnailImg"
+            android:layout_centerHorizontal="true"
+            android:foregroundGravity="center"
+            android:visibility="visible" />
 
 
-    </android.support.v7.widget.CardView>
+    </RelativeLayout>
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/stepInstruction"
-        android:layout_width="368dp"
+
+    <TextView
+        android:id="@+id/step_desc_txtView"
+        style="@style/StepDescTextView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:cardElevation="3dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mediaPlayer">
+        android:gravity="fill"
+        android:text="TEST TEST TEST TEST "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mediaPlayer" />
 
-        <TextView
-            android:id="@+id/step_desc_txtView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed"
-            android:gravity="fill"
-            android:lineSpacingExtra="8sp"
-            android:text=""
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textSize="24sp" />
-    </android.support.v7.widget.CardView>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

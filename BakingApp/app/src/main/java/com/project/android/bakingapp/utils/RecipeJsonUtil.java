@@ -3,15 +3,12 @@ package com.project.android.bakingapp.utils;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.project.android.bakingapp.data.RecipeContract;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 /**
  * Created by fg7cpt on 2/13/2018.
@@ -23,7 +20,7 @@ public class RecipeJsonUtil {
     private static final String TAG = RecipeJsonUtil.class.toString();
 
 
-    private static void addIngredients ( JSONArray ingredients, int recipeId, ContentResolver recContentResolver) throws JSONException{
+    private static void addIngredients(JSONArray ingredients, int recipeId, ContentResolver recContentResolver) throws JSONException {
         for (int count = 0; count < ingredients.length(); count++) {
 
             JSONObject ingredient = ingredients.getJSONObject(count);
@@ -42,7 +39,7 @@ public class RecipeJsonUtil {
     }
 
 
-    private static void addSteps ( JSONArray steps, int recipeId, ContentResolver recContentResolver) throws JSONException{
+    private static void addSteps(JSONArray steps, int recipeId, ContentResolver recContentResolver) throws JSONException {
 
         for (int count = 0; count < steps.length(); count++) {
             JSONObject stepsObj = steps.getJSONObject(count);
@@ -62,12 +59,12 @@ public class RecipeJsonUtil {
 
 
     }
-    public static void getRecipesContentValuesFromJson(Context context, String recipeJsonStr) throws JSONException{
+
+    public static void getRecipesContentValuesFromJson(Context context, String recipeJsonStr) throws JSONException {
 
         JSONArray RecipesJson = new JSONArray(recipeJsonStr);
 
         ContentValues[] recipesContentValues = new ContentValues[RecipesJson.length()];
-
 
 
         ContentResolver recContentResolver = context.getContentResolver();
@@ -91,8 +88,7 @@ public class RecipeJsonUtil {
             JSONArray steps = recipe.getJSONArray("steps");
 
 
-
-            addIngredients(ingredients,recipeId ,recContentResolver);
+            addIngredients(ingredients, recipeId, recContentResolver);
             addSteps(steps, recipeId, recContentResolver);
 
 

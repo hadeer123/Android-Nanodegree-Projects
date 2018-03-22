@@ -1,19 +1,21 @@
 package com.project.android.bakingapp.sync;
 
-import com.firebase.jobdispatcher.Job;
-import com.firebase.jobdispatcher.JobParameters;
-import com.firebase.jobdispatcher.JobService;
-
 import android.content.Context;
 import android.os.AsyncTask;
 
-/**
- * Created by fg7cpt on 2/21/2018.
- */
+import com.firebase.jobdispatcher.JobParameters;
+import com.firebase.jobdispatcher.JobService;
+
+
 
 public class RecipeFirebaseJobService extends JobService {
 
-    private AsyncTask<Void, Void, Void> mFetchRecipeTask;
+    private static AsyncTask<Void, Void, Void> mFetchRecipeTask;
+
+    public RecipeFirebaseJobService() {
+        super();
+    }
+
     @Override
     public boolean onStartJob(final JobParameters jobParameters) {
         mFetchRecipeTask = new AsyncTask<Void, Void, Void>() {

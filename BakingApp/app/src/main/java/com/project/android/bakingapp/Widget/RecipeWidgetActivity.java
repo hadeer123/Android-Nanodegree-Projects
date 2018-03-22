@@ -1,16 +1,17 @@
-package com.project.android.bakingapp;
+package com.project.android.bakingapp.Widget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.RemoteViews;
 
-public class RecipeWidgetActivity extends AppCompatActivity implements RecipesFragment.OnRecipeSelectedListener{
+import com.project.android.bakingapp.R;
+import com.project.android.bakingapp.RecipeIngredientFragment;
+import com.project.android.bakingapp.RecipesFragment;
+
+public class RecipeWidgetActivity extends AppCompatActivity implements RecipesFragment.OnRecipeSelectedListener {
 
     private AppWidgetManager mAppWidgetManager;
     private int mAppWidgetId;
@@ -21,7 +22,7 @@ public class RecipeWidgetActivity extends AppCompatActivity implements RecipesFr
         setResult(RESULT_CANCELED);
         setContentView(R.layout.activity_recipe_widget);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
@@ -40,13 +41,13 @@ public class RecipeWidgetActivity extends AppCompatActivity implements RecipesFr
     }
 
 
-    private  void updateWidget(String ingredients, String recipeName){
+    private void updateWidget(String ingredients, String recipeName) {
 
         RemoteViews views = new RemoteViews(getPackageName(),
                 R.layout.recipe_ingredients_widget);
 
         views.setTextViewText(R.id.appwidget_text, ingredients);
-        views.setTextViewText (R.id.RecipeName, recipeName);
+        views.setTextViewText(R.id.RecipeName, recipeName);
 
         mAppWidgetManager = AppWidgetManager.getInstance(this);
         mAppWidgetManager.updateAppWidget(mAppWidgetId, views);

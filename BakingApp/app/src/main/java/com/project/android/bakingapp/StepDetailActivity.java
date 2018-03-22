@@ -27,12 +27,12 @@ public class StepDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_step_detail);
 
 
-        previousStepImg = (ImageView) findViewById(R.id.prev_step_img);
-        nextStepImg = (ImageView) findViewById(R.id.next_step_img);
-        stepCountTxtView = (TextView) findViewById(R.id.stepsCountTxtView);
+        previousStepImg =  findViewById(R.id.prev_step_img);
+        nextStepImg = findViewById(R.id.next_step_img);
+        stepCountTxtView =  findViewById(R.id.stepsCountTxtView);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
-        setSupportActionBar(toolbar);
+
+        setSupportActionBar((Toolbar)findViewById(R.id.toolbar2));
 
 
         setTitle(getIntent().getStringExtra(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME));
@@ -50,14 +50,14 @@ public class StepDetailActivity extends AppCompatActivity {
             // using a fragment transaction.
 
             stepID = Integer.parseInt(getIntent().getStringExtra(StepDetailFragment.ARG_ITEM_ID));
-            totalSteps = getIntent().getIntExtra(TOTAL_STEPS_FOR_RECIPE, -1);
+            totalSteps = getIntent().getIntExtra(TOTAL_STEPS_FOR_RECIPE, -1) - 1;
             recipeID = StepDetailFragment.STEP_DETAIL_PROJECTION[StepDetailFragment.INDEX_RECIPE_ID];
 
             if (stepID == 0) {
+                stepCountTxtView.setText(R.string.intro_txt);
                 previousStepImg.setVisibility(View.INVISIBLE);
                 stepCountTxtView.setVisibility(View.INVISIBLE);
             }
-
 
 
             createFragment(stepID);
@@ -87,7 +87,8 @@ public class StepDetailActivity extends AppCompatActivity {
 
     private void createFragment(int stepID) {
 
-        stepCountTxtView.setText(String.valueOf(stepID) + getString(R.string.of) + String.valueOf(totalSteps-1));
+        stepCountTxtView.setText(getString(R.string.step_display, stepID, totalSteps));
+
         nextStepImg.setVisibility((stepID == totalSteps) ? View.INVISIBLE : View.VISIBLE);
         previousStepImg.setVisibility((stepID == 0) ? View.INVISIBLE : View.VISIBLE);
         stepCountTxtView.setVisibility((stepID == 0) ? View.INVISIBLE : View.VISIBLE);

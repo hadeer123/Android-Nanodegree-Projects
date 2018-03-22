@@ -10,10 +10,16 @@
     <string name="play">play</string>
     <string name="restart">restart</string>
     <string name="recipe_step_description_fill_txt">Recipe Step Description</string>
-    <string name="of">of</string>
+    <string name="step_display">Step %1$d of %2$d</string>
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="recipeIngTxt_text">RecipeIng</string>
     <string name="title_activity_recipe_widget">RecipeWidgetActivity</string>
+    <string name="no_internet">No internet Connection</string>
+    <string name="intent_filter_connectivity_change">android.net.conn.CONNECTIVITY_CHANGE</string>
+    <string name="intent_filter_wifi_state_changed">android.net.wifi.WIFI_STATE_CHANGED</string>
+    <string name="lost_network_msg">Lost Network Connection</string>
+    <string name="servings">Servings :</string>
+    <string name="intro_txt">Introduction</string>
 </resources>

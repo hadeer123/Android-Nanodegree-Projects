@@ -8,6 +8,49 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="BakingAppActivityStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:textColor">@android:color/black</item>
+
+    </style>
+
+
+    <style name="BakingAppTextStyle">
+        <item name="android:layout_margin">@dimen/text_margin</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:fontFamily">serif</item>
+    </style>
+
+
+    <style name="BakingAppRegularTextStyle" parent="BakingAppTextStyle">
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+    </style>
+
+    <style name="BakingAppTitleTextStyle" parent="BakingAppTextStyle">
+        <item name="android:textAppearance">?android:titleTextAppearance</item>
+        <item name="android:textSize">@dimen/textsize_xlarge</item>
+        <item name="android:padding">3dp</item>
+        <item name="android:fontFamily">cursive</item>
+    </style>
+
+    <style name="StepDescTextView" parent="BakingAppTextStyle">
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:layout_marginTop">@dimen/margin_default</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:textSize">@dimen/textsize_medium</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/margin_default</item>
+        <item name="android:lineSpacingExtra">@dimen/list_item_margin</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -16,5 +59,6 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 
 </resources>

@@ -15,12 +15,14 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.media.session.MediaButtonReceiver;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -43,6 +45,7 @@ import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.project.android.bakingapp.data.RecipeContract;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 
@@ -96,7 +99,7 @@ public class StepDetailFragment extends Fragment implements SimpleExoPlayer.Even
 
             queryData();
             Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout =  activity.findViewById(R.id.toolbar_layout);
+            Toolbar appBarLayout =  activity.findViewById(R.id.toolbar2);
 
             if (appBarLayout != null && mCursor!= null) {
                 appBarLayout.setTitle(stepTitle);
@@ -246,8 +249,17 @@ public class StepDetailFragment extends Fragment implements SimpleExoPlayer.Even
        if(!stepVideoUrl.isEmpty()) {
             initializeMediaSession();
             initializePlayer(Uri.parse(stepVideoUrl));
-        } else if(!stepImageUrl.isEmpty())
-            Picasso.with(getContext()).load(stepImageUrl).into(thumbNail);
+        } else if(!stepImageUrl.isEmpty()) {
+           thumbNail.setVisibility(View.VISIBLE);
+           final Picasso.Builder picassoBuilder = new Picasso.Builder(getContext()).listener(new Picasso.Listener() {
+               @Override
+               public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
+                   Log.e(TAG, uri.toString() +" " +exception.getMessage());
+               }
+           });
+           picassoBuilder.build().load(stepImageUrl).fit().placeholder(R.drawable.ic_not_found).error(R.drawable.ic_not_found).into(thumbNail);
+
+       }
 
     }
     @Override

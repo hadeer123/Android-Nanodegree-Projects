@@ -26,7 +26,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeAd
     public RecipesAdapter(Context mContext, RecipeAdapterOnClickHandler clickHandler, int itemLayout) {
         this.mContext = mContext;
         mClickHandler = clickHandler;
-        this.itemLayout = itemLayout;
+        RecipesAdapter.itemLayout = itemLayout;
     }
 
     @Override
@@ -89,11 +89,12 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeAd
 
     public interface RecipeAdapterOnClickHandler {
         void onClick(int recipeID, String recipeName);
-        void onClick (int stepID, int recipeID, int totalSteps);
+
+        void onClick(int stepID, int recipeID, int totalSteps);
     }
 
     class RecipeAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView recipeNameTxtV ;
+        TextView recipeNameTxtV;
         TextView recipeServingTxtV;
         TextView shortDesc;
 
@@ -101,7 +102,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeAd
             super(view);
             switch (itemLayout) {
                 case R.layout.recipe_card:
-                    recipeNameTxtV =  view.findViewById(R.id.recipeName);
+                    recipeNameTxtV = view.findViewById(R.id.recipeName);
                     recipeServingTxtV = view.findViewById(R.id.servingsTxtV);
                     break;
                 case R.layout.step_list_content:
@@ -139,7 +140,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeAd
                     final int step = mCursor.getInt(stepID);
 
                     int stepCount = mCursor.getCount();
-                    mClickHandler.onClick(step, reID,stepCount );
+                    mClickHandler.onClick(step, reID, stepCount);
                     break;
 
 
